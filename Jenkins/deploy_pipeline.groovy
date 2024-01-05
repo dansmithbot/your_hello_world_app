@@ -11,19 +11,29 @@ pipeline {
             }
         }
         
+        stage('Prepare') {
+            steps {
+                // Create target directory
+                sh 'mkdir -p target'
+            }
+        }
+        
         stage('Build') {
             steps {
                 // Compile Java source files - Adjust based on your Java project structure
-                dir('src') { // Navigate to the src directory
-                    sh 'javac -d ../target *.java' // Compile all Java files and output to target directory
+                dir('src') {
+                    sh 'javac -d ../target *.java'
                 }
             }
         }
         
         stage('Deploy to Raspberry Pi') {
             steps {
-                // Move the built artifact (hello-world-1.0.0.jar) to /home/pi/hello/ on the Pi
-                sh 'mv target/hello-world-1.0.0.jar /home/pi/hello/' // Using hello-world-1.0.0.jar as the artifact name
+                // List contents of the target directory for debugging
+                sh 'ls -l target/'
+                
+                // Move the built artifact to /home/pi/hello/ on the Pi
+                sh 'mv target/hello-world-1.0.0.jar /home/pi/hello/'
             }
         }
     }
