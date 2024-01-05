@@ -14,7 +14,9 @@ pipeline {
         stage('Build') {
             steps {
                 // Compile Java source files - Adjust based on your Java project structure
-                sh 'javac -d target src/*.java'
+                dir('src') { // Navigate to the src directory
+                    sh 'javac -d ../target *.java' // Compile all Java files and output to target directory
+                }
             }
         }
         
