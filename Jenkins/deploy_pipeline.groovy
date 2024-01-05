@@ -33,8 +33,14 @@ pipeline {
                 // List contents of the target directory for debugging
                 sh 'ls -l target/'
                 
-                // Move the built artifact to /home/pi/hello/ on the Pi
-                sh 'mv target/hello-world-1.0.0.jar /home/pi/hello/'
+                // Create a subfolder within the target directory to store artifacts
+                sh 'mkdir -p target/artifacts'
+                
+                // Move the built artifact to the 'artifacts' subfolder
+                sh 'mv target/hello-world-1.0.0.jar target/artifacts/'
+                
+                // Move the artifacts to /home/pi/hello/ on the Pi
+                sh 'mv target/artifacts/* /home/pi/hello/'
             }
         }
     }
