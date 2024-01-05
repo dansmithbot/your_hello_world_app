@@ -22,7 +22,8 @@ pipeline {
             steps {
                 // Compile Java source files - Adjust based on your Java project structure
                 dir('src') {
-                    sh 'javac -d ../target *.java'
+                    sh 'javac -d ../target HelloWorld.java'
+                    sh 'jar -cvf ../target/hello-world-1.0.0.jar -C ../target HelloWorld.class'
                 }
             }
         }
