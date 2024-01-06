@@ -35,9 +35,6 @@ pipeline {
                 
                 // Move the built artifact to the 'artifacts' subfolder
                 sh 'mv target/hello-world-1.0.0.jar target/artifacts/'
-                
-                // Move the artifacts to /home/pi/hello/ on the Pi
-                sh 'mv target/artifacts/* /home/pi/hello/'
             }
         }
     }
