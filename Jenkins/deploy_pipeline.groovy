@@ -33,9 +33,6 @@ pipeline {
                 // List contents of the target directory for debugging
                 sh 'ls -l target/'
                 
-                // Create a subfolder within the target directory to store artifacts
-                sh 'mkdir -p target/artifacts'
-                
                 // Move the built artifact to the 'artifacts' subfolder
                 sh 'mv target/hello-world-1.0.0.jar target/artifacts/'
                 
