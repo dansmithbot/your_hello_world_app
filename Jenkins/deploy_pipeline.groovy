@@ -25,14 +25,12 @@ pipeline {
                     sh 'javac -d ../target HelloWorld.java'
                 }
                 
-                // Create a manifest file in the target directory
-                dir('target') {
-                    writeFile file: 'Manifest.txt', text: 'Main-Class: HelloWorld\n'
-                }
+                // Create a timestamp for versioning
+                def timestamp = sh(script: 'date +%Y%m%d%H%M%S', returnStdout: true).trim()
                 
-                // Create the JAR file with the manifest file
+                // Create the JAR file with a timestamp in the name
                 dir('target') {
-                    sh 'jar cfm hello-world-1.0.0.jar Manifest.txt -C ../target HelloWorld.class'
+                    sh "jar cvf hello-world-${timestamp}.jar -C ../target HelloWorld.class"
                 }
             }
         }
@@ -43,7 +41,7 @@ pipeline {
                 sh 'ls -l target/'
                 
                 // Move the built artifact to the 'artifacts' subfolder
-                sh 'mv target/hello-world-1.0.0.jar target/artifacts/'
+                sh 'mv target/hello-world-*.jar target/artifacts/'
             }
         }
     }
