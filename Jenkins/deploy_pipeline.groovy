@@ -23,7 +23,16 @@ pipeline {
                 // Compile Java source files - Adjust based on your Java project structure
                 dir('src') {
                     sh 'javac -d ../target HelloWorld.java'
-                    sh 'jar -cvf ../target/hello-world-1.0.0.jar -C ../target HelloWorld.class'
+                }
+                
+                // Create a manifest file in the target directory
+                dir('target') {
+                    writeFile file: 'Manifest.txt', text: 'Main-Class: HelloWorld\n'
+                }
+                
+                // Create the JAR file with the manifest file
+                dir('target') {
+                    sh 'jar cfm hello-world-1.0.0.jar Manifest.txt -C ../target HelloWorld.class'
                 }
             }
         }
